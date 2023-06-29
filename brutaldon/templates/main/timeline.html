@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+{% load cache %}
+
+{% block title %}
+    Brutaldon ({{ own_acct.username }}) - {{ timeline_name }} timelime
+{% endblock %}
+
+{% block page_scripts %}
+    {% if not fullbrutalism %}
+        <script src="{% static 'js/mousetrap.min.js' %}" type="application/javascript"></script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if form %}
+        <h1 class="title">Post</h1>
+        <div class="box">
+            {% include "main/post_minimal_partial.html" %}
+        </div>
+        <hr class="is-hidden">
+    {% endif %}
+    <h1 class="title">Your {{ timeline_name }} timeline</h1>
+    <div id="timeline">
+        {% for toot in toots %}
+            {% cache 600 toot_partial toot.id %}
+                {% if toot.reblog %}
+                    {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
+                {% else %}
+                    {% include "main/toot_partial.html" with toot=toot reblog=False %}
+                {% endif %}
+            {% endcache %}
+            <hr class="is-hidden">
+        {% endfor %}
+
+        {% block pagination %}
+            <div class="around-pagination">
+                <div class="columns">
+                    {% if next %}
+                        <p class="column is-one-quarter">
+                            <a class="pagination-previous is-fullwidth button"
+                               rel="prev"
+                               href="{% url 'home_next' next.max_id %}"
+                               {% if preferences.click_to_load %}
+                               ic-get-from="{% url 'home_next' next.max_id %}"
+                               ic-select-from-response="#timeline"
+                               ic-indicator="#page-load-indicator"
+                               ic-target="closest div.around-pagination"
+                               ic-push-url="true"
+                               {% endif %}
+                            >
+                                Older
+                            </a>
+                        </p>
+                        <p class="column is-one-half"></p>
+                        {% endif %}
+                        {% if prev %}
+                        <p class="column is-one-quarter">
+                            <a class="pagination-next is-fullwidth button"
+                               rel="next"
+                               href="{% url 'home_prev' prev.min_id %}">
+                                Newer
+                            </a>
+                        </p>
+                        {% endif %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block page_scripts_inline %}
+    <script type="application/javascript">
+     document.addEventListener('DOMContentLoaded', function () {
+         Mousetrap.bind('ctrl+enter', function(e) {
+             var form = document.querySelector('#post-form');
+             form.submit();
+             return true;
+         });
+     });
+    </script>
+{% endblock %}

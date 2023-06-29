@@ -1,0 +1,34 @@
+{% load sanitizer %}
+{% load taglinks %}
+{% load static %}
+
+<form method="POST" action="{% url "vote" toot.id %}"
+      ic-post-to="{% url "vote" toot.id %}"
+      ic-target="closest article"
+      ic-indicator="#poll-spinner-{{ toot.id  }}"
+      ic-replace-target="true">
+    {% csrf_token %}
+    {% for option in toot.poll.options %}
+        <div class="field">
+            {% if toot.poll.multiple %}
+                <label class="checkbox">
+                    <input type="checkbox"
+                           name="poll-multiple"
+                           value="{{ forloop.counter0 }}">
+                    {{ option.title }}
+                </label>
+            {% else %}
+                <label class="radio">
+                    <input type="radio"
+                           name="poll-single"
+                           value="{{ forloop.counter0 }}">
+                    {{ option.title  }}
+                </label>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <input type="submit"  class="button is-primary" name="Vote" value="Vote">
+    <span id="poll-spinner-{{toot.id}}" class="fa fa-spinner fa-spin"
+       style="display:none"></span>
+
+</form>

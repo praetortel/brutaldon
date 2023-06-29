@@ -1,0 +1,143 @@
+{% load widget_tweaks %}
+
+{% if reply %}
+    <form method="post" id="post-form" action="{% url "reply" toot.id %}" enctype="multipart/form-data">
+{% elif redraft %}
+        <form method="post" id="post-form" action="{% url "redraft" toot.id %}" enctype="multipart/form-data">
+{% else %}
+            <form id="post-form" method="post" action="{% url "toot" %}" enctype="multipart/form-data">
+{% endif %}
+{% csrf_token %}
+
+<div>
+    {{ form.non_field_errors }}
+    <br>
+</div>
+
+<div class="field">
+    <label class="label"> {{ form.spoiler_text.label }}</label>
+    <div class="control">
+        {% render_field form.spoiler_text class+="input mousetrap" placeholder="Optional" %}
+    </div>
+</div>
+
+<div class="field" >
+    <label class="label" >{{ form.status.label }}</label>
+    <div class="control">
+        <textarea name="status" cols="40" rows="3" class="textarea is-primary mousetrap"
+                  required="" id="id_status"
+                  ic-post-to="{% url "user_search" %}"
+                  ic-trigger-on="keyup changed" ic-trigger-delay="500ms"
+                  ic-target="#username_autocomplete">{% if form.status.value %}{{ form.status.value }}{% endif %}</textarea>
+        <div id="username_autocomplete"></div>
+    </div>
+    <div id="status_count"></div>
+</div>
+
+<div class="field">
+    <label class="label" > {{ form.visibility.label }}</label>
+    <div class="control has-icons-left">
+        <div class="select">
+            {% render_field form.visibility class+="select"%}
+            <span class="icon is-small is-left" >
+                <i class="fa fa-address-card"></i>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="field has-addons">
+    <div class="file">
+        <label class="file-label">
+            {% render_field form.media_file_1 class+="file-input" %}
+            <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                </span>
+                <span class="file-label" id="media_filename_1">
+                    {{ form.media_file_1.label }}
+                </span>
+            </span>
+        </label>
+    </div>
+    <div class="control is-expanded">
+        {% render_field form.media_text_1 class+="input mousetrap" placeholder="Describe attachment" %}
+    </div>
+</div>
+
+<div class="field has-addons">
+    <div class="file">
+        <label class="file-label">
+            {% render_field form.media_file_2 class+="file-input" %}
+            <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                </span>
+                <span class="file-label" id="media_filename_2">
+                    {{ form.media_file_2.label }}
+                </span>
+            </span>
+        </label>
+    </div>
+    <div class="control is-expanded">
+        {% render_field form.media_text_2 class+="input mousetrap" placeholder="Describe attachment" %}
+    </div>
+</div>
+
+<div class="field has-addons">
+    <div class="file">
+        <label class="file-label">
+            {% render_field form.media_file_3 class+="file-input" %}
+            <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                </span>
+                <span class="file-label" id="media_filename_3">
+                    {{ form.media_file_3.label }}
+                </span>
+            </span>
+        </label>
+    </div>
+    <div class="control is-expanded">
+        {% render_field form.media_text_3 class+="input mousetrap" placeholder="Describe attachment" %}
+    </div>
+</div>
+<div class="field has-addons">
+    <div class="file">
+        <label class="file-label">
+            {% render_field form.media_file_4 class+="file-input" %}
+            <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                </span>
+                <span class="file-label" id="media_filename_4">
+                    {{ form.media_file_4.label }}
+                </span>
+            </span>
+        </label>
+    </div>
+    <div class="control is-expanded">
+        {% render_field form.media_text_4 class+="input mousetrap" placeholder="Describe attachment" %}
+    </div>
+</div>
+
+
+<div class="field has-addons">
+    <div class="control level is-mobile">
+        <a href="{% url "user" own_acct.acct %}" class="image avatar is-48x48 level-item" >
+            <img src="{{ own_acct.avatar_static }}" alt="[{{ own_acct.acct }}]">
+        </a>
+        <input type="submit" class="button is-primary level-item"
+               name="toot" value="Toot">
+        <a href="{% url "emoji" %}" target="_blank"  rel="noopener noreferrer"
+           class="level-item emoji-link" title="custom emoji reference">😊</a>
+    </div>
+</div>
+{% if not preferences.no_javascript %}
+    <script type="application/javascript">
+     fileButtonUpdaters();
+     Intercooler.ready(fileButtonUpdaters);
+     Intercooler.ready(characterCountSetup);
+    </script>
+{% endif %}
+            </form>

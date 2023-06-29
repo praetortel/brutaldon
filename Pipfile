@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"beautifulsoup4" = "*"
+bleach = "~=4.1"
+certifi = "*"
+chardet = "*"
+decorator = "*"
+django-markdownify = "*"
+django-widget-tweaks = "*"
+"html5lib" = "*"
+idna = "*"
+markdown = "*"
+"mastodon.py" = ">=1.4.2"
+python-dateutil = "*"
+pytz = "*"
+requests = "*"
+six = "*"
+"urllib3" = "*"
+webencodings = "*"
+Django = "~=3.2"
+django-html_sanitizer = "*"
+inscriptis = "*"
+lxml = "*"
+
+[dev-packages]

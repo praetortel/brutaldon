@@ -1,0 +1,13 @@
+<span id="notes-count">
+{% if not preferences.theme.is_brutalist %}
+    <span
+        {% if notifications and notifications != '0' %}
+        class="badge"
+        {% endif %}
+        data-badge="{{ notifications }}">
+        Notifications</span>
+    </span>
+{% else %}
+    <span >Notifications ({{ notifications }})</span>
+{% endif %}
+</span>

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="title">Log in to your instance</h1>
+
+    <form method="post" action="{% url "login" %}">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">{{ form.instance.label  }}</label>
+            <div class="control has-icons-left">
+                {% render_field form.instance class+="input" %}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-mastodon"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <input type="submit" name="log_in"
+                   value="Log in" class="button is-primary" >
+        </div>
+    </form>
+
+    <div class="notification">
+        <button class="delete"></button>
+        <div>
+            Not able to log in with this form? Maybe your brutaldon instance isn't
+            visible on the internet to your Mastodon instance? If so, you can use
+            the <a href="{% url "oldlogin" %}">old login form</a>.
+        </div>
+    </div>
+
+{% endblock %}

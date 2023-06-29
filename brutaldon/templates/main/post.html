@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title  %} Brutaldon ({{ own_acct.username }}) - toot {% endblock %}
+
+{% block content %}
+    <h1 class="title" >Toot!</h1>
+    <div class="box">
+        {% include "main/post_partial.html" %}
+    </div>
+{% endblock %}
+
+{% block page_scripts_inline %}
+    <script type="application/javascript">
+     document.addEventListener('DOMContentLoaded', function () {
+         Mousetrap.bind('ctrl+enter', function(e) {
+             var form = document.querySelector('#post-form');
+             form.submit();
+             return true;
+         });
+     });
+    </script>
+{% endblock %}

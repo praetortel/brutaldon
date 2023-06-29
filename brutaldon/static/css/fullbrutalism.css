@@ -1,0 +1,364 @@
+/*
+	HTML5 Reset :: style.css
+	----------------------------------------------------------
+	We have learned much from/been inspired by/taken code where offered from:
+
+	Eric Meyer					:: http://meyerweb.com
+	HTML5 Doctor				:: http://html5doctor.com
+	and the HTML5 Boilerplate	:: http://html5boilerplate.com
+
+-------------------------------------------------------------------------------*/
+
+/* Let's default this puppy out
+-------------------------------------------------------------------------------*/
+
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font-weight: normal;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+main, article, aside, figure, footer, header, nav, section, details, summary {display: block;}
+
+/* Handle box-sizing while better addressing child elements:
+   http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+html {
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+/* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
+
+/* Responsive images and other embedded objects */
+/* if you don't have full control over `img` tags (if you have to overcome attributes), consider adding height: auto */
+img,
+object,
+embed {max-width: 100%;}
+
+/*
+   Note: keeping IMG here will cause problems if you're using foreground images as sprites.
+	In fact, it *will* cause problems with Google Maps' controls at small size.
+	If this is the case for you, try uncommenting the following:
+
+#map img, img.is-32x32 {
+		max-width: none;
+}
+*/
+
+/* force a vertical scrollbar to prevent a jumpy page */
+html {overflow-y: scroll;}
+
+/* we use a lot of ULs that aren't bulleted.
+	you'll have to restore the bullets within content,
+	which is fine because they're probably customized anyway */
+ul {list-style: none;}
+
+blockquote, q {quotes: none;}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {content: ''; content: none;}
+
+a {margin: 0; padding: 0; font-size: 100%; vertical-align: baseline; background: transparent;}
+
+del {text-decoration: line-through;}
+
+abbr[title], dfn[title] {border-bottom: 1px dotted #000; cursor: help;}
+
+/* tables still need cellspacing="0" in the markup */
+table {border-collapse: separate; border-spacing: 0;}
+th {font-weight: bold; vertical-align: bottom;}
+td {font-weight: normal; vertical-align: top;}
+
+hr {display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;}
+
+input, select {vertical-align: middle;}
+
+pre {
+    white-space: pre; /* CSS2 */
+    white-space: pre-wrap; /* CSS 2.1 */
+    white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+    word-wrap: break-word; /* IE */
+}
+
+input[type="radio"] {vertical-align: text-bottom;}
+input[type="checkbox"] {vertical-align: bottom;}
+.ie7 input[type="checkbox"] {vertical-align: baseline;}
+.ie6 input {vertical-align: text-bottom;}
+
+select, input, textarea {font: 99% sans-serif;}
+
+table {font-size: inherit; font: 100%;}
+
+small {font-size: 85%;}
+
+strong {font-weight: bold;}
+
+td, td img, img.is-32x32 {vertical-align: top;}
+
+/* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
+sub, sup {font-size: 75%; line-height: 0; position: relative;}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+/* standardize any monospaced elements */
+pre, code, kbd, samp {font-family: monospace, sans-serif;}
+
+/* hand cursor on clickable elements */
+.clickable,
+label,
+input[type=button],
+input[type=submit],
+input[type=file],
+button {cursor: pointer;}
+
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea {margin: 0;}
+
+/* make buttons play nice in IE */
+button,
+input[type=button] {width: auto; overflow: visible;}
+
+/* scale images in IE7 more attractively */
+.ie7 img, img.is-32x32 {-ms-interpolation-mode: bicubic;}
+
+/* prevent BG image flicker upon hover
+   (commented out as usage is rare, and the filter syntax messes with some pre-processors)
+.ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
+*/
+
+/* let's clear some floats */
+.clearfix:after { content: " "; display: block; clear: both; }
+
+
+/* Okay, now add some extra brutalism */
+
+body {
+    font-family: Terminus, Inconsolata, Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Monaco",  monospace;
+    background-color: #CCC;
+    color: #000;
+    margin: 1em;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 80em;
+}
+
+a {
+    color: blue;
+    text-decoration: underline;
+}
+
+a:active {
+    color: red;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: purple;
+    text-decoration: underline;
+}
+
+img.is-32x32 {
+    float: left;
+    max-width: 512px;
+    max-height: auto;
+    margin: 4px;
+}
+
+
+.level {
+    clear: both;
+}
+
+.title {
+    font-size: 3ex;
+    font-weight: bold;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
+.subtitle {
+    font-size: 1.5ex;
+    font-weight: bold;
+    margin-top: 0.25ex;
+    margin-bottom: 0.25ex;
+}
+.toot {
+    clear: both;
+}
+
+.image.is-32x32, .is-32x32 img, img.is-32x32 {
+    width: 32px;
+    height: 32px;
+}
+
+.image.is-48x48, .is-48x48 img, img.is-48x48 {
+    width: 48px;
+    height: 48px;
+}
+
+.image.is-64x64, .is-64x64 img, img.is-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.image.is-96x96, .is-96x96 img, img.is-96x96 {
+    width: 96px;
+    height: 96px;
+}
+
+.is-max-128 img, .is-max-256 img
+{
+    display: block;
+    clear: both;
+}
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+.media {
+    padding: 1em;
+    margin: 4px;
+    border: 8px ridge #CCC;
+    overflow: auto;
+}
+
+.media.active-context {
+    background-color: #DDD;
+}
+
+summary::before {
+    content: " 🠞  ";
+}
+
+details[open] summary::before {
+    content: " 🠟  ";
+}
+
+.field
+{
+    margin-top: 1em;
+}
+
+label
+{
+    font-weight: bold;
+}
+
+.control, .select
+{
+    margin-top: 0.5ex;
+    margin-bottom: 0.5ex;
+}
+
+.account-avatar
+{
+    display: inline-block;
+}
+.reblog-icon
+{
+    margin-top: 32px;
+    display: inline-block;
+}
+
+.media-content
+{
+    margin-top: 1ex;
+}
+
+.media-content > div > p
+{
+    margin-bottom: 1ex;
+}
+
+.textarea
+{
+    max-width: 100%;
+}
+
+.errorlist
+{
+    color: #FF0000;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    vertical-align: text-bottom;
+}
+
+.modal {
+	  -webkit-box-align: center;
+	  -ms-flex-align: center;
+	  align-items: center;
+	  display: none;
+	  -webkit-box-pack: center;
+	  -ms-flex-pack: center;
+	  justify-content: center;
+	  overflow: hidden;
+	  position: fixed;
+    z-index: 40;
+}
+.modal-background {
+	  position: absolute;
+	  background-color: rgba(10,10,10,.86);
+}
+.modal, .modal-background {
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  top: 0;
+}
+
+.modal-content
+{
+    z-index: 60;
+    background-color: #CCC;
+    color: #000;
+    padding: 1ex;
+    border: 8px ridge #CCC;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.modal.is-active {
+	  display: flex;
+}
+
+.card
+{
+    padding: 1em;
+    margin-top: 1em;
+    border: 1px solid black;
+}
+
+.card-header
+{
+    padding-bottom: 1em;
+    border-bottom: 1px solid black;
+}
+
+.card-image
+{
+    padding: 1em;
+    margin 0, auto;
+}

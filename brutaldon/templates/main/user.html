@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load sanitizer %}
+{% load taglinks %}
+
+{% block title %}
+Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
+{% endblock %}
+
+{% block content %}
+
+<div class="card user-card">
+    {% if not preferences.theme.is_brutalist %}
+        <div class="card-header" style="background-image: url({{ user.header }});">
+    {% else %}
+        <div class="card-header">
+    {% endif %}
+            <div class="card-header-title title">
+                <a href="{{ user.url }}">
+                    {{ user.display_name }}
+                </a>
+            </div>
+            <figure class="image is-96x96 card-header-icon">
+                <img src="{{ user.avatar }}" alt="Avatar">
+                {% if user.locked %}
+                    <span class="fa fa-lock account-locked">
+                        <span class="is-hidden">Private</span>
+                    </span>
+                {% endif %}
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                {{ user.note | relink_toot | strip_html | safe }}
+            </div>
+            {% if user.acct != own_acct.acct %}
+            <div class="level is-mobile">
+                <div class="level-left">
+                    {% if relationship.requested %}
+                        <a class="level-item fa fa-hourglass" title="cancel request"
+                           href="{% url 'follow' user.id %}"
+                           ic-post-to="{% url 'follow' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
+                            <span class="is-hidden">Cancel request</span>
+                        </a>
+                    {% elif not relationship.following %}
+                        <a class="level-item fa fa-user-plus" title="follow"
+                           href="{% url 'follow' user.id %}"
+                           ic-post-to="{% url 'follow' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
+                            <span class="is-hidden">Follow</span>
+                        </a>
+                    {% else %}
+                        <a class="level-item fa fa-user-times" title="unfollow"
+                           href="{% url 'follow' user.id %}"
+                           ic-post-to="{% url 'follow' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true"
+                           ic-confirm="Unfollow this user?">
+                            <span class="is-hidden">Unfollow</span>
+                        </a>
+                    {% endif %}
+                    <a class="level-item fa fa-social-home"
+                       href="{{ user.url }}" title="home">
+                        <span class="is-hidden">View on home site</span>
+                    </a>
+                    <a class="level-item fa fa-envelope"
+                       href="{% url 'toot' user.acct %}" title="mention">
+                        <span class="is-hidden">Mention</span>
+                    </a>
+                    <i id="user-spinner" class="fa fa-spinner fa-spin" style="display:none"></i>
+                </div>
+                <div class="level-right">
+                    {% if not relationship.muting %}
+                        <a class="level-item fa fa-volume-off" title="mute"
+                           href="{% url 'mute' user.id %}"
+                           ic-post-to="{% url 'mute' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true"
+                           ic-confirm="Mute this user?">
+                            <span class="is-hidden">Mute</span>
+                        </a>
+                    {% else %}
+                        <a class="level-item fa fa-volume-up" title="unmute"
+                           href="{% url 'mute' user.id %}"
+                           ic-post-to="{% url 'mute' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
+                            <span class="is-hidden">Unmute</span>
+                        </a>
+                    {% endif %}
+                    {% if not relationship.blocking %}
+                        <a class="level-item fa fa-ban" title="block"
+                           href="{% url 'block' user.id %}"
+                           ic-post-to="{% url 'block' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true"
+                           ic-confirm="Block this user?">
+                            <span class="is-hidden">Block</span>
+                        </a>
+                    {% else %}
+                        <a class="level-item fa fa-circle-o" title="unblock"
+                           href="{% url 'block' user.id %}"
+                           ic-post-to="{% url 'block' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
+                                <span class="is-hidden">Unblock</span>
+                            </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <br>
+
+    {% for toot in toots %}
+    {% if toot.reblog %}
+    {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
+    {% else %}
+    {% include "main/toot_partial.html" with toot=toot reblog=False %}
+    {% endif %}
+    <hr class="is-hidden">
+    {% endfor %}
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if prev %}
+        <a class="pagination-next" rel="next" href="{% url 'user_prev' user.acct prev.min_id %}">Newer</a>
+        {% endif %}
+        {% if next %}
+        <a class="pagination-previous" rel="prev" href="{% url 'user_next' user.acct next.max_id %}">Older</a>
+        {% endif %}
+    </nav>
+
+    {% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <img src="{% static "/images/brutaldon.png" %}"
+    </div>
+
+    <h1 class="title">Brutaldon</h1>
+    <h2 class="subtitle">a brutalist web interface for Mastodon</h2>
+    <section class="section">
+
+        <p>
+            Brutaldon is a client for <a href="https://joinmastodon.org/">Mastodon</a>. You can use it to log in to any Mastodon instance from any browser, including text browsers such as lynx.
+        </p>
+        <p>
+            You do not need a separate brutaldon account to use it. Brutaldon will authenticate you to your instance.
+        </p>
+    </section>
+
+    <section class="section container">
+        <p>
+            <a class="button is-primary" href="{% url "login" %}">
+                Log in
+            </a>
+        </p>
+        {% if request.session.instance %}
+            {% if request.session.username or request.session.access_token %}
+
+                <p>
+                    <a href="{% url "home" %}">
+                        Or continue to your home timeline.
+                    </a>
+                </p>
+            {% endif %}
+        {% endif %}
+
+    </section>
+
+    <section>
+        This is version {{ version }} of brutaldon.
+    </section>
+{% endblock %}

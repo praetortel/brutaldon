@@ -1,0 +1,55 @@
+{% load widget_tweaks %}
+<form method="post" id="post-form" action="{% url "toot" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div>
+        {{ form.non_field_errors }}
+        <br>
+    </div>
+
+    <div class="field">
+        <label class="label"> {{ form.spoiler_text.label }}</label>
+        <div class="control">
+            {% render_field form.spoiler_text class+="input mousetrap" placeholder="Optional" %}
+        </div>
+    </div>
+
+    <div class="field" >
+        <label class="label" >{{ form.status.label }}</label>
+        <div class="control">
+            <textarea name="status" cols="40" rows="3" class="textarea is-primary mousetrap"
+                      required="" id="id_status"
+                      ic-post-to="{% url "user_search" %}"
+                      ic-trigger-on="keyup changed" ic-trigger-delay="500ms"
+                      ic-target="#username_autocomplete">{% if form.status.value %}{{ form.status.value }}{% endif %}</textarea>
+            <div id="username_autocomplete"></div>
+        </div>
+        <div id="status_count"></div>
+    </div>
+
+    <div class="field has-addons">
+        <div class="control  level is-mobile">
+            <a href="{% url "user" own_acct.acct %}" class="image avatar is-48x48 level-item">
+                <img src="{{ own_acct.avatar_static }}" alt="[{{ own_acct.acct }}]">
+            </a>
+            <input type="submit" class="button is-primary level-item"
+                   name="toot" value="Toot">
+            <a href="{% url "emoji" %}" target="_blank"  rel="noopener noreferrer"
+               class="level-item emoji-link" title="custom emoji reference">😊</a>
+            <a href="{% url "toot" %}"
+               ic-get-from="{% url "toot" %}"
+               ic-target="#post-form"
+               ic-select-from-response="#post-form"
+               ic-include="#id_status,#id_spoiler_text"
+               title="Complete toot form (media, visibility, etc"
+               class="fa fa-edit">
+                <span class="is-hidden">Complete toot form (media, visibility etc)</span>
+            </a>
+        </div>
+    </div>
+    {% if not preferences.theme.no_javascript %}
+        <script type="application/javascript">
+         Intercooler.ready(characterCountSetup);
+        </script>
+    {% endif %}
+</form>
